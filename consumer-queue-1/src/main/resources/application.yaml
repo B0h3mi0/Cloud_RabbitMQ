@@ -1,0 +1,22 @@
+server:
+  port: 8082 # Usamos un puerto distinto al del productor
+
+spring:
+  # Configuración RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  # Configuración MySQL (usando las credenciales de tu docker-compose)
+  datasource:
+    url: jdbc:mysql://localhost:3306/transporte_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Esto creará la tabla 'locations' automáticamente la primera vez
+    show-sql: true # Útil para ver los INSERTS en la consola
