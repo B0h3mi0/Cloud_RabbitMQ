@@ -1,0 +1,12 @@
+[
+  {"idVehiculo": "FL-00-11", "lat": -33.518, "lon": -70.598},
+  {"idVehiculo": "FL-00-12", "lat": -33.520, "lon": -70.600},
+  {"idVehiculo": "FL-00-13", "lat": -33.525, "lon": -70.605},
+  {"idVehiculo": "ST-11-20", "lat": -33.440, "lon": -70.650},
+  {"idVehiculo": "ST-11-21", "lat": -33.445, "lon": -70.655},
+  {"idVehiculo": "MQ-99-01", "lat": -33.500, "lon": -70.580},
+  {"idVehiculo": "MQ-99-02", "lat": -33.505, "lon": -70.585},
+  {"idVehiculo": "CZ-55-88", "lat": -33.480, "lon": -70.610},
+  {"idVehiculo": "CZ-55-89", "lat": -33.485, "lon": -70.615},
+  {"idVehiculo": "XC-22-33", "lat": -33.530, "lon": -70.590}
+]

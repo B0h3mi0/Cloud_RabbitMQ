@@ -1,0 +1,12 @@
+[
+  {"ruta": "104-BUS", "estado": "NORMAL", "desc": "Operando en tiempo."},
+  {"ruta": "210-BUS", "estado": "ATRASO", "desc": "Congestión alta."},
+  {"ruta": "E04-BUS", "estado": "DESVIO", "desc": "Desvío por trabajos."},
+  {"ruta": "L4-METRO", "estado": "NORMAL", "desc": "Frecuencia de 3 min."},
+  {"ruta": "L5-METRO", "estado": "ATRASO", "desc": "Retraso en andén."},
+  {"ruta": "F08-BUS", "estado": "NORMAL", "desc": "Ruta despejada."},
+  {"ruta": "112-BUS", "estado": "DESVIO", "desc": "Corte de calle preventivo."},
+  {"ruta": "712-BUS", "estado": "ATRASO", "desc": "Taco kilométrico."},
+  {"ruta": "L1-METRO", "estado": "NORMAL", "desc": "Servicio expreso activo."},
+  {"ruta": "301-BUS", "estado": "NORMAL", "desc": "Sin novedades."}
+]
