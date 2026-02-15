@@ -94,21 +94,22 @@ Crea las peticiones POST y configura el body (raw -> JSON) apuntando a las varia
 
 A. Endpoint Ubicaciones: http://localhost:8081/api/v1/locations
 
-JSON
+```JSON
 {
   "vehicleId": "{{idVehiculo}}",
   "latitude": {{lat}},
   "longitude": {{lon}}
 }
 B. Endpoint Horarios: http://localhost:8083/api/v1/schedules
-
-JSON
+```
+```JSON
 {
   "routeId": "{{ruta}}",
   "status": "{{estado}}",
   "updatedTime": "2026-02-15T20:00:00",
   "description": "{{desc}}"
 }
+```
 Paso 3: Disparar la ráfaga
 Selecciona la carpeta de tu Colección en Postman y haz clic en Run.
 
