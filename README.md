@@ -70,23 +70,25 @@ Crea estos dos archivos .json en tu computador:
 <details>
 <summary>📂 Ver contenido de <b>data_ubicaciones.json</b></summary>
 
-JSON
+```JSON
 [
   {"idVehiculo": "FL-00-11", "lat": -33.518, "lon": -70.598},
   {"idVehiculo": "ST-11-20", "lat": -33.440, "lon": -70.650},
   {"idVehiculo": "MQ-99-01", "lat": -33.500, "lon": -70.580}
 ]
+```
 </details>
 
 <details>
 <summary>📂 Ver contenido de <b>data_horarios.json</b></summary>
 
-JSON
+```JSON
 [
   {"ruta": "104-BUS", "estado": "NORMAL", "desc": "Operando en tiempo."},
   {"ruta": "210-BUS", "estado": "ATRASO", "desc": "Congestión alta."},
   {"ruta": "L4-METRO", "estado": "NORMAL", "desc": "Frecuencia de 3 min."}
 ]
+```
 </details>
 
 Paso 2: Configurar variables en Postman
@@ -100,8 +102,9 @@ A. Endpoint Ubicaciones: http://localhost:8081/api/v1/locations
   "latitude": {{lat}},
   "longitude": {{lon}}
 }
-B. Endpoint Horarios: http://localhost:8083/api/v1/schedules
 ```
+B. Endpoint Horarios: http://localhost:8083/api/v1/schedules
+
 ```JSON
 {
   "routeId": "{{ruta}}",
