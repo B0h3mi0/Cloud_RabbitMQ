@@ -1,56 +1,81 @@
 version: '3.8'
+
 services:
-  rabbitmq1:
+  # 1. Nuestro Broker de Mensajería
+  rabbitmq:
     image: rabbitmq:3-management
-    hostname: rabbitmq1
+    container_name: rabbitmq-broker
     ports:
-      - "15672:15672"
       - "5672:5672"
+      - "15672:15672"
     environment:
-      RABBITMQ_ERLANG_COOKIE: 'mysecretcookie'
-    networks:
-      - cloud-network
-    volumes:
-      - rabbitmq1_data:/var/lib/rabbitmq
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
-  rabbitmq2:
-    image: rabbitmq:3-management
-    hostname: rabbitmq2
-    ports:
-      - "15673:15672"
-      - "5673:5672"
-    environment:
-      RABBITMQ_ERLANG_COOKIE: 'mysecretcookie'
-    networks:
-      - cloud-network
-    depends_on:
-      - rabbitmq1
-    volumes:
-      - ./rabbitmq-entrypoint.sh:/rabbitmq-entrypoint.sh
-      - rabbitmq2_data:/var/lib/rabbitmq
-    entrypoint: ["bash", "/rabbitmq-entrypoint.sh"]
-
+  # 2. Nuestra Base de Datos
   mysql-db:
     image: mysql:8.0
-    container_name: mysql-transporte
-    restart: always
+    container_name: mysql-db
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: transporte_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - cloud-network
-    volumes:
-      - mysql_data:/var/lib/mysql
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
 
-networks:
-  cloud-network:
-    driver: bridge
+  # 3. Productor 1 (Ubicaciones)
+  producer-queue-1:
+    build: ./producer-queue-1
+    container_name: ms-producer-1
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
 
-volumes:
-  rabbitmq1_data:
-  rabbitmq2_data:
-  mysql_data:
+  # 4. Consumidor 1 (Guarda en MySQL)
+  consumer-queue-1:
+    build: ./consumer-queue-1
+    container_name: ms-consumer-1
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      # Apuntamos a mysql-db en lugar de localhost
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/transporte_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    depends_on:
+      - rabbitmq
+      - mysql-db
+
+  # 5. Productor 2 (Horarios)
+  producer-queue-2:
+    build: ./producer-queue-2
+    container_name: ms-producer-2
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+
+  # 6. Consumidor 2 (Genera JSON)
+  consumer-queue-2:
+    build: ./consumer-queue-2
+    container_name: ms-consumer-2
+    ports:
+      - "8084:8084"
+    environment:
+      - SERVER_PORT=8084
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      # Variables para Amazon S3 (AWS SDK las lee automáticamente)
+      - AWS_ACCESS_KEY_ID=ASIARJLC45GRD4LA4MJ5  # Reemplaza con tu Access Key
+      - AWS_SECRET_ACCESS_KEY=JVIGZz97PqTWYMi+ZJb6sGJ02yBcq2xXaRHC67Kc aws_session_token=IQoJb3JpZ2luX2VjEGMaCXVzLXdlc3QtMiJIMEYCIQCt+SKUJ6vN53qX3nqT97e2AlJEUXfZqGD9B2T4wg8VaQIhAL12sIywYsncQ+Lk/+QNTr1QxjNjwP+t0sKPVP3pDjqeKq4CCCwQBBoMMDg4NzkxMTE2MTk0Igx2z0TOdcYUgitQKscqiwLXVnD8KGtdiUFjBla5Vz3g27QYOat+V3mxKfbZUqgqFhKhajTE3bnjwsPhTxm44/8GUYGLYx6zQ6W6Zb4xuiBDlJmvcXyJqEZmVB66jXMctQnT5C8RsO7vcSnPEx16B7qT/51DwZN1Z5zUtH2KHAhtetky8crwpbB8TcWldMbDagXuBM8zGMj7ynZ8tvHIzNQdWqwG49ttecgMAznbk+lW9WMS95S6So33wlvT74eMs/sdr0Mn1n50EZ74/mFkgyQKe3ODXM4GHrw+6D1UKcct6+aF5ah7dfMkwMRd509eQMsuETDeNS4Xju7eyV2FtCV/uKhPk7UAR6dP+3ZzYSYhbBEL8Ap6q473RRIw6Y7KzAY6nAGXQAJzFd/4mZck6IDqC2qChArTLTIyXhChLaIKBnJou9Hmb2h/ZF5YQRGyvMpLaEL3fYN1WqJ+TEFWWiXXE7+CRQGyJpoZXYxaw0i67Y7oyQHyBRZEzjzorOzA33ZKyRQMXBB7uKRu7BAClFEP/D4keXeyzZYb7TTY9OtX99ke72UcBvOKF7sYcC/56JE2CZAluG/5aL6PsUn+UUU=
+      - AWS_REGION=us-east-1                    # Pon la región donde creaste tu bucket
+      - AWS_S3_BUCKET_NAME=transporte-schedules-cloud-native # El nombre exacto de tu bucket
+    depends_on:
+      - rabbitmq

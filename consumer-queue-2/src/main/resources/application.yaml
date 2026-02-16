@@ -7,3 +7,7 @@ spring:
     port: 5672
     username: guest
     password: guest
+aws:
+  s3:
+    bucket:
+      name: ${AWS_S3_BUCKET_NAME:bucket-local-de-pruebas}
