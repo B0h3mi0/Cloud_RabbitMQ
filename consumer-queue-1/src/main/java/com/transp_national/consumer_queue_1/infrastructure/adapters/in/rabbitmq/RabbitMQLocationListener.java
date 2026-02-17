@@ -24,8 +24,6 @@ public class RabbitMQLocationListener {
 
         } catch (Exception e) {
             System.err.println("Error al procesar (ej. MySQL caído): " + e.getMessage());
-
-            canal.basicNack(deliveryTag, false, false);
             System.out.println("NACK enviado. Mensaje movido a la DLQ.");
         }
     }

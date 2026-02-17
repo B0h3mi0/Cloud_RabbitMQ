@@ -28,8 +28,6 @@ public class RabbitMQScheduleListener {
 
         } catch (Exception e) {
             System.err.println("Error al procesar (ej. AWS S3 caído): " + e.getMessage());
-            // Rechazo y envío a la DLQ de horarios
-            canal.basicNack(deliveryTag, false, false);
             System.out.println("NACK enviado. Mensaje movido a horarios.dlq.");
         }
     }
