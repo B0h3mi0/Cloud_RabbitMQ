@@ -1,4 +1,4 @@
-package com.transp_national.producer_queue_2.infrastructure.config; // Ajusta según el microservicio
+package com.transp_national.producer_queue_1.infrastructure.config; // Ajusta según el microservicio
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

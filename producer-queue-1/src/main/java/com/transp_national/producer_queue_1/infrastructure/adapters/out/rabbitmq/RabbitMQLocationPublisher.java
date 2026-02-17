@@ -17,8 +17,8 @@ public class RabbitMQLocationPublisher implements LocationPublisherPort {
     @Override
     public void publishLocation(Location location) {
         rabbitTemplate.convertAndSend(
-                com.transp_national.producer_queue_2.infrastructure.config.RabbitMQConfig.EXCHANGE_NAME,
-                com.transp_national.producer_queue_2.infrastructure.config.RabbitMQConfig.ROUTING_KEY,
+                com.transp_national.producer_queue_1.infrastructure.config.RabbitMQConfig.EXCHANGE_NAME,
+                com.transp_national.producer_queue_1.infrastructure.config.RabbitMQConfig.ROUTING_KEY,
                 location
         );
         System.out.println(" [x] Sent location for vehicle: " + location.vehicleId());
