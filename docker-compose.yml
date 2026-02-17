@@ -40,13 +40,16 @@ services:
   consumer-queue-1:
     build: ./consumer-queue-1
     container_name: ms-consumer-1
+    restart: on-failure
     ports:
       - "8082:8082"
     environment:
       - SERVER_PORT=8082
       - SPRING_RABBITMQ_HOST=rabbitmq
-      # Apuntamos a mysql-db en lugar de localhost
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/transporte_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=devuser
+      - SPRING_DATASOURCE_PASSWORD=devpassword
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
     depends_on:
       - rabbitmq
       - mysql-db
