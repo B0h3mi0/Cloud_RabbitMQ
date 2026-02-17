@@ -19,7 +19,6 @@ public class RabbitMQScheduleListener {
         this.objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
     }
 
-    // ID único para este consumidor
     @RabbitListener(id = "listener-horarios", queues = "horarios.queue", ackMode = "MANUAL")
     public void recibirHorario(org.springframework.amqp.core.Message mensaje, com.rabbitmq.client.Channel canal)
             throws java.io.IOException {
@@ -34,7 +33,6 @@ public class RabbitMQScheduleListener {
                     com.transp_national.consumer_queue_2.domain.model.Schedule.class);
             processScheduleUseCase.execute(schedule);
 
-            // Confirmación manual de éxito
             canal.basicAck(deliveryTag, false);
             System.out.println("Archivo subido a S3 y ACK enviado.");
 
