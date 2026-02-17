@@ -8,6 +8,15 @@ spring:
     username: guest
     password: guest
 aws:
+  access:
+    key:
+      id: ${AWS_ACCESS_KEY_ID}
+  secret:
+    access:
+      key: ${AWS_SECRET_ACCESS_KEY}
+  session:
+    token: ${AWS_SESSION_TOKEN}
+  region: ${AWS_REGION}
   s3:
     bucket:
-      name: ${AWS_S3_BUCKET_NAME:bucket-local-de-pruebas}
+      name: ${AWS_S3_BUCKET_NAME}
