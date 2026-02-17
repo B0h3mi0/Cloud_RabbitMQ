@@ -12,4 +12,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 # Exponemos un puerto genérico (lo sobreescribiremos en el compose)
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"] ["top", "-b"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

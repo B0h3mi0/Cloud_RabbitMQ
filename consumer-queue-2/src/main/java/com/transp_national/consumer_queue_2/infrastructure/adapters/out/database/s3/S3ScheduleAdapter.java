@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Component
-@Primary // Le dice a Spring que prefiera este adaptador sobre el local
+@Primary
 public class S3ScheduleAdapter implements SaveScheduleFilePort {
 
     private final S3Client s3Client;

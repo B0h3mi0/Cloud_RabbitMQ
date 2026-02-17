@@ -3,6 +3,7 @@ package com.transp_national.consumer_queue_2.infrastructure.adapters.out.databas
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.transp_national.consumer_queue_2.application.ports.out.SaveScheduleFilePort;
 import com.transp_national.consumer_queue_2.domain.model.Schedule;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
