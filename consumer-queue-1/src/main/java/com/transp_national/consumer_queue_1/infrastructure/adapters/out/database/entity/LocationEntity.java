@@ -12,9 +12,49 @@ public class LocationEntity {
     private String vehicleId;
     private Double latitude;
     private Double longitude;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
     private LocalDateTime timestamp;
 
-    // Getters, Setters y constructores (o usa @Data de Lombok si lo prefieres)
     public LocationEntity() {}
     public LocationEntity(String vehicleId, Double latitude, Double longitude, LocalDateTime timestamp) {
         this.vehicleId = vehicleId;
@@ -22,4 +62,6 @@ public class LocationEntity {
         this.longitude = longitude;
         this.timestamp = timestamp;
     }
+
+
 }

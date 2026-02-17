@@ -7,4 +7,5 @@ public record Location(
         Double latitude,
         Double longitude,
         LocalDateTime timestamp
-) {}
+) {
+}
